@@ -1,9 +1,7 @@
-﻿using GuitarAI.Core;
-using NAudio.Wave;
-using NAudio.Wave.SampleProviders;
+﻿using NAudio.Wave;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
+using GuitarAI.Core;
 
 namespace GuitarAI.Audio
 {
@@ -15,19 +13,19 @@ namespace GuitarAI.Audio
         private WaveInEvent? waveIn;
         private WaveOutEvent? waveOut;
         private BufferedWaveProvider? waveProvider;
-        private VolumeSampleProvider? volumeProvider;
 
         private bool isRunning;
         private readonly int sampleRate;
         private readonly int channels;
         private readonly List<IEffect> effects = new List<IEffect>();
+        private float volume = 1.0f;
 
         public bool IsRunning => isRunning;
         public event EventHandler<string>? ErrorOccurred;
         public event EventHandler<float>? AudioLevelChanged;
         public IReadOnlyList<IEffect> Effects => effects;
 
-        public AudioEngine(int sampleRate = 44100, int channels = 1)
+        public AudioEngine(int sampleRate = 48000, int channels = 2)
         {
             this.sampleRate = sampleRate;
             this.channels = channels;
@@ -40,51 +38,49 @@ namespace GuitarAI.Audio
         {
             try
             {
-                // Set up input (guitar)
+                // Set up input (guitar) - 16-bit PCM
                 waveIn = new WaveInEvent
                 {
                     DeviceNumber = inputDeviceNumber,
                     WaveFormat = new WaveFormat(sampleRate, 16, channels),
-                    BufferMilliseconds = 50  // Increased for stability
+                    BufferMilliseconds = 50
                 };
 
-                // Set up buffered provider for processing
+                // Set up buffered provider - keep in 16-bit PCM format
                 waveProvider = new BufferedWaveProvider(waveIn.WaveFormat)
                 {
-                    BufferLength = sampleRate * channels * 2,  // 1 second buffer
-                    DiscardOnBufferOverflow = true,
-                    ReadFully = false  // Important: don't wait for buffer to fill
-                };
-
-                // Convert to float samples for processing
-                var sampleProvider = waveProvider.ToSampleProvider();
-
-                // Add volume control
-                volumeProvider = new VolumeSampleProvider(sampleProvider)
-                {
-                    Volume = 1.0f
+                    BufferLength = sampleRate * channels * 4,  // 2 seconds
+                    DiscardOnBufferOverflow = true
                 };
 
                 // Process audio callback
                 waveIn.DataAvailable += OnDataAvailable;
 
-                // Set up output with larger latency to prevent crackling
+                // Set up output - same format as input
                 waveOut = new WaveOutEvent
                 {
                     DeviceNumber = outputDeviceNumber,
-                    DesiredLatency = 100,  // Increased from 40ms
-                    NumberOfBuffers = 3    // More buffers for stability
+                    DesiredLatency = 100,
+                    NumberOfBuffers = 3
                 };
 
-                waveOut.Init(volumeProvider);
+                waveOut.Init(waveProvider);
+
+                System.Diagnostics.Debug.WriteLine($"AudioEngine: Input format: {waveIn.WaveFormat}");
+                System.Diagnostics.Debug.WriteLine($"AudioEngine: Output format: {waveOut.OutputWaveFormat}");
 
                 // Start recording first, then playback
                 waveIn.StartRecording();
 
+                System.Diagnostics.Debug.WriteLine("AudioEngine: Recording started");
+
                 // Give the buffer a moment to start filling
-                System.Threading.Thread.Sleep(50);
+                System.Threading.Thread.Sleep(100);
 
                 waveOut.Play();
+
+                System.Diagnostics.Debug.WriteLine($"AudioEngine: Playback started. WaveOut state: {waveOut.PlaybackState}");
+                System.Diagnostics.Debug.WriteLine($"AudioEngine: Effects count: {effects.Count}");
 
                 isRunning = true;
             }
@@ -99,16 +95,11 @@ namespace GuitarAI.Audio
         {
             if (waveProvider == null) return;
 
-            // Check buffer level - if too full, we have latency building up
-            var bufferedDuration = waveProvider.BufferedDuration;
-            if (bufferedDuration.TotalMilliseconds > 500)
-            {
-                // Clear excess to prevent echo/delay buildup
-                waveProvider.ClearBuffer();
-            }
-
             // Process effects on the audio data
             ProcessEffects(e.Buffer, 0, e.BytesRecorded);
+
+            // Apply volume by modifying the buffer directly
+            ApplyVolume(e.Buffer, 0, e.BytesRecorded);
 
             // Write processed data to the buffer for output
             waveProvider.AddSamples(e.Buffer, 0, e.BytesRecorded);
@@ -130,6 +121,20 @@ namespace GuitarAI.Audio
             }
         }
 
+        private void ApplyVolume(byte[] buffer, int offset, int count)
+        {
+            if (volume == 1.0f) return; // Skip if unity gain
+
+            // Apply volume to 16-bit samples
+            for (int i = offset; i < offset + count; i += 2)
+            {
+                short sample = (short)((buffer[i + 1] << 8) | buffer[i]);
+                sample = (short)(sample * volume);
+                buffer[i] = (byte)(sample & 0xFF);
+                buffer[i + 1] = (byte)((sample >> 8) & 0xFF);
+            }
+        }
+
         private float CalculateLevel(byte[] buffer, int bytesRecorded)
         {
             if (bytesRecorded == 0) return 0;
@@ -147,12 +152,9 @@ namespace GuitarAI.Audio
             return (float)Math.Sqrt(sum / samplesRecorded);
         }
 
-        public void SetVolume(float volume)
+        public void SetVolume(float newVolume)
         {
-            if (volumeProvider != null)
-            {
-                volumeProvider.Volume = Math.Clamp(volume, 0f, 2f);
-            }
+            volume = Math.Clamp(newVolume, 0f, 2f);
         }
 
         public void AddEffect(IEffect effect)
@@ -190,7 +192,6 @@ namespace GuitarAI.Audio
             }
 
             waveProvider = null;
-            volumeProvider = null;
         }
 
         public void Dispose()

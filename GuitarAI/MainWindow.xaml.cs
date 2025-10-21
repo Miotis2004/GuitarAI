@@ -1,6 +1,5 @@
 ﻿using GuitarAI.Audio;
 using GuitarAI.Core;
-using NAudio.Gui;
 using System;
 using System.Windows;
 
@@ -9,7 +8,9 @@ namespace GuitarAI
     public partial class MainWindow : Window
     {
         private AudioEngine? audioEngine;
+        private AsioAudioEngine? asioEngine;
         private OverdriveEffect? overdriveEffect;
+        private bool useAsio = true; // Default to ASIO for low latency
 
         public MainWindow()
         {
@@ -59,47 +60,100 @@ namespace GuitarAI
         {
             try
             {
-                // Get selected devices
-                var inputDevice = InputDeviceComboBox.SelectedItem as AudioDeviceManager.AudioDevice;
-                var outputDevice = OutputDeviceComboBox.SelectedItem as AudioDeviceManager.AudioDevice;
+                // Try to use ASIO first (much lower latency)
+                var asioDrivers = AsioAudioEngine.GetAsioDriverNames();
 
-                if (inputDevice == null || outputDevice == null)
+                if (asioDrivers.Length > 0 && useAsio)
                 {
-                    MessageBox.Show("Please select both input and output devices.", "Device Selection",
-                        MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
+                    // Use ASIO
+                    LogStatus("Using ASIO for low latency...");
+
+                    // Find Focusrite driver (or use first available)
+                    string driverName = asioDrivers[0];
+                    foreach (var driver in asioDrivers)
+                    {
+                        if (driver.Contains("Focusrite", StringComparison.OrdinalIgnoreCase))
+                        {
+                            driverName = driver;
+                            break;
+                        }
+                    }
+
+                    LogStatus($"ASIO Driver: {driverName}");
+
+                    // Create and configure overdrive effect
+                    overdriveEffect = new OverdriveEffect
+                    {
+                        Enabled = OverdriveEnabledCheckBox.IsChecked ?? true,
+                        Gain = (float)GainSlider.Value,
+                        Drive = (float)DriveSlider.Value,
+                        Tone = (float)ToneSlider.Value,
+                        OutputLevel = (float)OutputLevelSlider.Value
+                    };
+
+                    // Create ASIO engine
+                    asioEngine = new AsioAudioEngine();
+                    asioEngine.ErrorOccurred += AudioEngine_ErrorOccurred;
+                    asioEngine.AudioLevelChanged += AudioEngine_AudioLevelChanged;
+                    asioEngine.AddEffect(overdriveEffect);
+
+                    asioEngine.Start(driverName);
+
+                    // Update UI
+                    StartStopButton.Content = "Stop Audio Engine";
+                    InputDeviceComboBox.IsEnabled = false;
+                    OutputDeviceComboBox.IsEnabled = false;
+
+                    LogStatus("ASIO audio engine started (low latency mode)");
+                    LogStatus("Overdrive effect loaded and active.");
                 }
-
-                // Create audio engine
-                audioEngine = new AudioEngine();
-                audioEngine.ErrorOccurred += AudioEngine_ErrorOccurred;
-                audioEngine.AudioLevelChanged += AudioEngine_AudioLevelChanged;
-
-                // Create and configure overdrive effect
-                overdriveEffect = new OverdriveEffect
+                else
                 {
-                    Enabled = OverdriveEnabledCheckBox.IsChecked ?? true,
-                    Gain = (float)GainSlider.Value,
-                    Drive = (float)DriveSlider.Value,
-                    Tone = (float)ToneSlider.Value,
-                    OutputLevel = (float)OutputLevelSlider.Value
-                };
+                    // Fall back to regular audio engine
+                    LogStatus("ASIO not available, using standard audio...");
 
-                // Add effect to the audio engine
-                audioEngine.AddEffect(overdriveEffect);
+                    // Get selected devices
+                    var inputDevice = InputDeviceComboBox.SelectedItem as AudioDeviceManager.AudioDevice;
+                    var outputDevice = OutputDeviceComboBox.SelectedItem as AudioDeviceManager.AudioDevice;
 
-                // Start the engine
-                audioEngine.Start(inputDevice.DeviceNumber, outputDevice.DeviceNumber);
+                    if (inputDevice == null || outputDevice == null)
+                    {
+                        MessageBox.Show("Please select both input and output devices.", "Device Selection",
+                            MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
 
-                // Update UI
-                StartStopButton.Content = "Stop Audio Engine";
-                InputDeviceComboBox.IsEnabled = false;
-                OutputDeviceComboBox.IsEnabled = false;
+                    // Create audio engine
+                    audioEngine = new AudioEngine();
+                    audioEngine.ErrorOccurred += AudioEngine_ErrorOccurred;
+                    audioEngine.AudioLevelChanged += AudioEngine_AudioLevelChanged;
 
-                LogStatus($"Audio engine started.");
-                LogStatus($"Input: {inputDevice.Name}");
-                LogStatus($"Output: {outputDevice.Name}");
-                LogStatus($"Overdrive effect loaded and active.");
+                    // Create and configure overdrive effect
+                    overdriveEffect = new OverdriveEffect
+                    {
+                        Enabled = OverdriveEnabledCheckBox.IsChecked ?? true,
+                        Gain = (float)GainSlider.Value,
+                        Drive = (float)DriveSlider.Value,
+                        Tone = (float)ToneSlider.Value,
+                        OutputLevel = (float)OutputLevelSlider.Value
+                    };
+
+                    // Add effect to the audio engine
+                    audioEngine.AddEffect(overdriveEffect);
+
+                    // Start the engine
+                    audioEngine.Start(inputDevice.DeviceNumber, outputDevice.DeviceNumber);
+
+                    // Update UI
+                    StartStopButton.Content = "Stop Audio Engine";
+                    InputDeviceComboBox.IsEnabled = false;
+                    OutputDeviceComboBox.IsEnabled = false;
+
+                    LogStatus($"Audio engine started.");
+                    LogStatus($"Input: {inputDevice.Name}");
+                    LogStatus($"Output: {outputDevice.Name}");
+                    LogStatus($"Overdrive effect loaded and active.");
+                }
             }
             catch (Exception ex)
             {
@@ -118,15 +172,24 @@ namespace GuitarAI
                 audioEngine.Stop();
                 audioEngine.Dispose();
                 audioEngine = null;
-
-                // Update UI
-                StartStopButton.Content = "Start Audio Engine";
-                InputDeviceComboBox.IsEnabled = true;
-                OutputDeviceComboBox.IsEnabled = true;
-                AudioLevelMeter.Value = 0;
-
-                LogStatus("Audio engine stopped.");
             }
+
+            if (asioEngine != null)
+            {
+                asioEngine.ErrorOccurred -= AudioEngine_ErrorOccurred;
+                asioEngine.AudioLevelChanged -= AudioEngine_AudioLevelChanged;
+                asioEngine.Stop();
+                asioEngine.Dispose();
+                asioEngine = null;
+            }
+
+            // Update UI
+            StartStopButton.Content = "Start Audio Engine";
+            InputDeviceComboBox.IsEnabled = true;
+            OutputDeviceComboBox.IsEnabled = true;
+            AudioLevelMeter.Value = 0;
+
+            LogStatus("Audio engine stopped.");
 
             overdriveEffect = null;
         }
@@ -136,6 +199,11 @@ namespace GuitarAI
             if (audioEngine != null)
             {
                 audioEngine.SetVolume((float)e.NewValue);
+            }
+
+            if (asioEngine != null)
+            {
+                asioEngine.SetVolume((float)e.NewValue);
             }
 
             if (VolumeLabel != null)
