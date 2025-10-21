@@ -1,4 +1,6 @@
 ﻿using GuitarAI.Audio;
+using GuitarAI.Core;
+using NAudio.Gui;
 using System;
 using System.Windows;
 
@@ -7,6 +9,7 @@ namespace GuitarAI
     public partial class MainWindow : Window
     {
         private AudioEngine? audioEngine;
+        private OverdriveEffect? overdriveEffect;
 
         public MainWindow()
         {
@@ -67,11 +70,25 @@ namespace GuitarAI
                     return;
                 }
 
-                // Create and start audio engine
+                // Create audio engine
                 audioEngine = new AudioEngine();
                 audioEngine.ErrorOccurred += AudioEngine_ErrorOccurred;
                 audioEngine.AudioLevelChanged += AudioEngine_AudioLevelChanged;
 
+                // Create and configure overdrive effect
+                overdriveEffect = new OverdriveEffect
+                {
+                    Enabled = OverdriveEnabledCheckBox.IsChecked ?? true,
+                    Gain = (float)GainSlider.Value,
+                    Drive = (float)DriveSlider.Value,
+                    Tone = (float)ToneSlider.Value,
+                    OutputLevel = (float)OutputLevelSlider.Value
+                };
+
+                // Add effect to the audio engine
+                audioEngine.AddEffect(overdriveEffect);
+
+                // Start the engine
                 audioEngine.Start(inputDevice.DeviceNumber, outputDevice.DeviceNumber);
 
                 // Update UI
@@ -82,7 +99,7 @@ namespace GuitarAI
                 LogStatus($"Audio engine started.");
                 LogStatus($"Input: {inputDevice.Name}");
                 LogStatus($"Output: {outputDevice.Name}");
-                LogStatus("Playing audio through (currently no effects applied)...");
+                LogStatus($"Overdrive effect loaded and active.");
             }
             catch (Exception ex)
             {
@@ -110,6 +127,8 @@ namespace GuitarAI
 
                 LogStatus("Audio engine stopped.");
             }
+
+            overdriveEffect = null;
         }
 
         private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -122,6 +141,67 @@ namespace GuitarAI
             if (VolumeLabel != null)
             {
                 VolumeLabel.Text = $"{(int)(e.NewValue * 100)}%";
+            }
+        }
+
+        private void OverdriveEnabled_Changed(object sender, RoutedEventArgs e)
+        {
+            if (overdriveEffect != null)
+            {
+                overdriveEffect.Enabled = OverdriveEnabledCheckBox.IsChecked ?? false;
+                LogStatus($"Overdrive effect {(overdriveEffect.Enabled ? "enabled" : "disabled")}");
+            }
+        }
+
+        private void GainSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (overdriveEffect != null)
+            {
+                overdriveEffect.Gain = (float)e.NewValue;
+            }
+
+            if (GainLabel != null)
+            {
+                GainLabel.Text = e.NewValue.ToString("F1");
+            }
+        }
+
+        private void DriveSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (overdriveEffect != null)
+            {
+                overdriveEffect.Drive = (float)e.NewValue;
+            }
+
+            if (DriveLabel != null)
+            {
+                DriveLabel.Text = e.NewValue.ToString("F1");
+            }
+        }
+
+        private void ToneSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (overdriveEffect != null)
+            {
+                overdriveEffect.Tone = (float)e.NewValue;
+            }
+
+            if (ToneLabel != null)
+            {
+                ToneLabel.Text = e.NewValue.ToString("F2");
+            }
+        }
+
+        private void OutputLevelSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (overdriveEffect != null)
+            {
+                overdriveEffect.OutputLevel = (float)e.NewValue;
+            }
+
+            if (OutputLevelLabel != null)
+            {
+                OutputLevelLabel.Text = e.NewValue.ToString("F2");
             }
         }
 

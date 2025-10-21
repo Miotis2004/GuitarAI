@@ -1,6 +1,9 @@
-﻿using NAudio.Wave;
+﻿using GuitarAI.Core;
+using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
 using System;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace GuitarAI.Audio
 {
@@ -17,10 +20,12 @@ namespace GuitarAI.Audio
         private bool isRunning;
         private readonly int sampleRate;
         private readonly int channels;
+        private readonly List<IEffect> effects = new List<IEffect>();
 
         public bool IsRunning => isRunning;
         public event EventHandler<string>? ErrorOccurred;
         public event EventHandler<float>? AudioLevelChanged;
+        public IReadOnlyList<IEffect> Effects => effects;
 
         public AudioEngine(int sampleRate = 44100, int channels = 1)
         {
@@ -102,15 +107,27 @@ namespace GuitarAI.Audio
                 waveProvider.ClearBuffer();
             }
 
-            // Write input data to the buffer for output
+            // Process effects on the audio data
+            ProcessEffects(e.Buffer, 0, e.BytesRecorded);
+
+            // Write processed data to the buffer for output
             waveProvider.AddSamples(e.Buffer, 0, e.BytesRecorded);
 
             // Calculate audio level for UI feedback
             float level = CalculateLevel(e.Buffer, e.BytesRecorded);
             AudioLevelChanged?.Invoke(this, level);
+        }
 
-            // TODO: This is where we'll add effects processing in the future
-            // ProcessEffects(e.Buffer, e.BytesRecorded);
+        private void ProcessEffects(byte[] buffer, int offset, int count)
+        {
+            // Process each effect in the chain
+            foreach (var effect in effects)
+            {
+                if (effect.Enabled)
+                {
+                    effect.Process(buffer, offset, count);
+                }
+            }
         }
 
         private float CalculateLevel(byte[] buffer, int bytesRecorded)
@@ -136,6 +153,21 @@ namespace GuitarAI.Audio
             {
                 volumeProvider.Volume = Math.Clamp(volume, 0f, 2f);
             }
+        }
+
+        public void AddEffect(IEffect effect)
+        {
+            effects.Add(effect);
+        }
+
+        public void RemoveEffect(IEffect effect)
+        {
+            effects.Remove(effect);
+        }
+
+        public void ClearEffects()
+        {
+            effects.Clear();
         }
 
         public void Stop()

@@ -32,7 +32,11 @@
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\User\\Desktop\\GuitarAI\\GuitarAI.Core\\GuitarAI.Core.csproj": {
+                "projectPath": "C:\\Users\\User\\Desktop\\GuitarAI\\GuitarAI.Core\\GuitarAI.Core.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -108,11 +112,7 @@
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
-            "projectReferences": {
-              "C:\\Users\\User\\Desktop\\GuitarAI\\GuitarAI.Audio\\GuitarAI.Audio.csproj": {
-                "projectPath": "C:\\Users\\User\\Desktop\\GuitarAI\\GuitarAI.Audio\\GuitarAI.Audio.csproj"
-              }
-            }
+            "projectReferences": {}
           }
         },
         "warningProperties": {

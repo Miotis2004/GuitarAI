@@ -113,6 +113,7 @@
       "System.Security.Principal.Windows/4.7.0": {},
       "GuitarAI.Audio/1.0.0": {
         "dependencies": {
+          "GuitarAI.Core": "1.0.0",
           "NAudio": "2.2.1",
           "NAudio.Asio": "2.2.1"
         },
@@ -124,9 +125,6 @@
         }
       },
       "GuitarAI.Core/1.0.0": {
-        "dependencies": {
-          "GuitarAI.Audio": "1.0.0"
-        },
         "runtime": {
           "GuitarAI.Core.dll": {
             "assemblyVersion": "1.0.0.0",

@@ -11,4 +11,8 @@
     <PackageReference Include="NAudio.Asio" Version="2.2.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\GuitarAI.Core\GuitarAI.Core.csproj" />
+  </ItemGroup>
+
 </Project>

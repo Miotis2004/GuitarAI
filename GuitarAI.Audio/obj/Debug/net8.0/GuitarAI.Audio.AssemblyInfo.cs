@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GuitarAI.Audio")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b6e3179e617c0eaafa43d0920f2679e57028c4ba")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+15f594286de5cd3a44758382584c7bb06cf9c14d")]
 [assembly: System.Reflection.AssemblyProductAttribute("GuitarAI.Audio")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GuitarAI.Audio")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
