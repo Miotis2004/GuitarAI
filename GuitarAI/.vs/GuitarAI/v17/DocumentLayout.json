@@ -1,0 +1,166 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\User\\Desktop\\GuitarAI\\GuitarAI\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{064A41A8-5E13-43B2-9CB3-E1EDF8A74688}|..\\GuitarAI.Audio\\GuitarAI.Audio.csproj|c:\\users\\user\\desktop\\guitarai\\guitarai.audio\\audioengine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{064A41A8-5E13-43B2-9CB3-E1EDF8A74688}|..\\GuitarAI.Audio\\GuitarAI.Audio.csproj|c:\\users\\user\\desktop\\guitarai\\guitarai.audio\\audiodevicemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{064A41A8-5E13-43B2-9CB3-E1EDF8A74688}|..\\GuitarAI.Audio\\GuitarAI.Audio.csproj|c:\\users\\user\\desktop\\guitarai\\guitarai.audio\\guitarai.audio.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D61266FD-6999-4AA9-A5BF-2F849129D440}|GuitarAI.csproj|c:\\users\\user\\desktop\\guitarai\\guitarai\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D61266FD-6999-4AA9-A5BF-2F849129D440}|GuitarAI.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D61266FD-6999-4AA9-A5BF-2F849129D440}|GuitarAI.csproj|c:\\users\\user\\desktop\\guitarai\\guitarai\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{D61266FD-6999-4AA9-A5BF-2F849129D440}|GuitarAI.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{943B7E77-24DB-4F6F-88D2-E531951454F0}|..\\GuitarAI.Core\\GuitarAI.Core.csproj|c:\\users\\user\\desktop\\guitarai\\guitarai.core\\guitarai.core.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D61266FD-6999-4AA9-A5BF-2F849129D440}|GuitarAI.csproj|c:\\users\\user\\desktop\\guitarai\\guitarai\\guitarai.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{D61266FD-6999-4AA9-A5BF-2F849129D440}|GuitarAI.csproj|solutionrelative:guitarai.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{064A41A8-5E13-43B2-9CB3-E1EDF8A74688}|..\\GuitarAI.Audio\\GuitarAI.Audio.csproj|c:\\users\\user\\desktop\\guitarai\\guitarai.audio\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{943B7E77-24DB-4F6F-88D2-E531951454F0}|..\\GuitarAI.Core\\GuitarAI.Core.csproj|c:\\users\\user\\desktop\\guitarai\\guitarai.core\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AudioDeviceManager.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\GuitarAI\\GuitarAI.Audio\\AudioDeviceManager.cs",
+              "RelativeDocumentMoniker": "..\\GuitarAI.Audio\\AudioDeviceManager.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\GuitarAI\\GuitarAI.Audio\\AudioDeviceManager.cs",
+              "RelativeToolTip": "..\\GuitarAI.Audio\\AudioDeviceManager.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAIwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-21T04:16:50.737Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AudioEngine.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\GuitarAI\\GuitarAI.Audio\\AudioEngine.cs",
+              "RelativeDocumentMoniker": "..\\GuitarAI.Audio\\AudioEngine.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\GuitarAI\\GuitarAI.Audio\\AudioEngine.cs",
+              "RelativeToolTip": "..\\GuitarAI.Audio\\AudioEngine.cs",
+              "ViewState": "AgIAAG4AAAAAAAAAAAAcwKgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-21T04:16:07.18Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "GuitarAI.Core",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\GuitarAI\\GuitarAI.Core\\GuitarAI.Core.csproj",
+              "RelativeDocumentMoniker": "..\\GuitarAI.Core\\GuitarAI.Core.csproj",
+              "ToolTip": "C:\\Users\\User\\Desktop\\GuitarAI\\GuitarAI.Core\\GuitarAI.Core.csproj",
+              "RelativeToolTip": "..\\GuitarAI.Core\\GuitarAI.Core.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-10-21T04:11:06.081Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "GuitarAI",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\GuitarAI\\GuitarAI\\GuitarAI.csproj",
+              "RelativeDocumentMoniker": "GuitarAI.csproj",
+              "ToolTip": "C:\\Users\\User\\Desktop\\GuitarAI\\GuitarAI\\GuitarAI.csproj",
+              "RelativeToolTip": "GuitarAI.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-10-21T04:10:02.537Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "GuitarAI.Audio",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\GuitarAI\\GuitarAI.Audio\\GuitarAI.Audio.csproj",
+              "RelativeDocumentMoniker": "..\\GuitarAI.Audio\\GuitarAI.Audio.csproj",
+              "ToolTip": "C:\\Users\\User\\Desktop\\GuitarAI\\GuitarAI.Audio\\GuitarAI.Audio.csproj",
+              "RelativeToolTip": "..\\GuitarAI.Audio\\GuitarAI.Audio.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-10-21T04:08:22.935Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\GuitarAI\\GuitarAI\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "MainWindow.xaml",
+              "ToolTip": "C:\\Users\\User\\Desktop\\GuitarAI\\GuitarAI\\MainWindow.xaml",
+              "RelativeToolTip": "MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-10-21T04:05:12.175Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\GuitarAI\\GuitarAI\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "MainWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\GuitarAI\\GuitarAI\\MainWindow.xaml.cs",
+              "RelativeToolTip": "MainWindow.xaml.cs",
+              "ViewState": "AgIAAGMAAAAAAAAAAAAcwJ0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-21T04:05:08.714Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Class1.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\GuitarAI\\GuitarAI.Audio\\Class1.cs",
+              "RelativeDocumentMoniker": "..\\GuitarAI.Audio\\Class1.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\GuitarAI\\GuitarAI.Audio\\Class1.cs",
+              "RelativeToolTip": "..\\GuitarAI.Audio\\Class1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-21T04:07:53.985Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Class1.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\GuitarAI\\GuitarAI.Core\\Class1.cs",
+              "RelativeDocumentMoniker": "..\\GuitarAI.Core\\Class1.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\GuitarAI\\GuitarAI.Core\\Class1.cs",
+              "RelativeToolTip": "..\\GuitarAI.Core\\Class1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-21T04:07:06.475Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+C:\Users\User\Desktop\GuitarAI\GuitarAI.Core\obj\Debug\net8.0\GuitarAI.Core.csproj.AssemblyReference.cache
+C:\Users\User\Desktop\GuitarAI\GuitarAI.Core\obj\Debug\net8.0\GuitarAI.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\Desktop\GuitarAI\GuitarAI.Core\obj\Debug\net8.0\GuitarAI.Core.AssemblyInfoInputs.cache
+C:\Users\User\Desktop\GuitarAI\GuitarAI.Core\obj\Debug\net8.0\GuitarAI.Core.AssemblyInfo.cs
+C:\Users\User\Desktop\GuitarAI\GuitarAI.Core\obj\Debug\net8.0\GuitarAI.Core.csproj.CoreCompileInputs.cache
+C:\Users\User\Desktop\GuitarAI\GuitarAI.Core\obj\Debug\net8.0\GuitarAI.Core.sourcelink.json
+C:\Users\User\Desktop\GuitarAI\GuitarAI.Core\bin\Debug\net8.0\GuitarAI.Core.deps.json
+C:\Users\User\Desktop\GuitarAI\GuitarAI.Core\bin\Debug\net8.0\GuitarAI.Core.dll
+C:\Users\User\Desktop\GuitarAI\GuitarAI.Core\bin\Debug\net8.0\GuitarAI.Core.pdb
+C:\Users\User\Desktop\GuitarAI\GuitarAI.Core\bin\Debug\net8.0\GuitarAI.Audio.dll
+C:\Users\User\Desktop\GuitarAI\GuitarAI.Core\bin\Debug\net8.0\GuitarAI.Audio.pdb
+C:\Users\User\Desktop\GuitarAI\GuitarAI.Core\obj\Debug\net8.0\GuitarAI.2C55A504.Up2Date
+C:\Users\User\Desktop\GuitarAI\GuitarAI.Core\obj\Debug\net8.0\GuitarAI.Core.dll
+C:\Users\User\Desktop\GuitarAI\GuitarAI.Core\obj\Debug\net8.0\refint\GuitarAI.Core.dll
+C:\Users\User\Desktop\GuitarAI\GuitarAI.Core\obj\Debug\net8.0\GuitarAI.Core.pdb
+C:\Users\User\Desktop\GuitarAI\GuitarAI.Core\obj\Debug\net8.0\ref\GuitarAI.Core.dll
